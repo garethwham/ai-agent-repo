@@ -12,6 +12,7 @@ A modern, React-based todo list application with Atlassian-inspired design. This
   - Title
   - Description
   - Visual status indicators
+- Ability for users to add a label to the card
 - **Atlassian Design System**: Implements Atlassian's color scheme and styling patterns
 - **Responsive Layout**: Works seamlessly across different screen sizes
 - **React-powered**: Built with React 18 for optimal performance and maintainability
