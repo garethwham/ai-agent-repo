@@ -12,7 +12,7 @@ A modern, React-based todo list application with Atlassian-inspired design. This
   - Title
   - Description
   - Visual status indicators
-- Ability for users to add a label to the card
+  - Unique labels for task categorization
 - **Atlassian Design System**: Implements Atlassian's color scheme and styling patterns
 - **Responsive Layout**: Works seamlessly across different screen sizes
 - **React-powered**: Built with React 18 for optimal performance and maintainability
@@ -55,7 +55,13 @@ The application provides a simple and intuitive interface for managing tasks:
 1. Tasks are organized in three columns based on their status
 2. Each task card displays a title and description
 3. Visual indicators (colored borders) help quickly identify task status
-4. The responsive layout ensures a great experience on both desktop and mobile devices
+4. Add unique labels to tasks for better organization and categorization
+5. The responsive layout ensures a great experience on both desktop and mobile devices
+
+### Task Labels
+- Each task can have a unique label for better organization
+- Labels must be unique across all tasks
+- Use the label input field at the bottom of each task card to add or edit labels
 
 ## Development
 
