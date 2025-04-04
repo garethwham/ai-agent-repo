@@ -72,3 +72,21 @@
 .status-done {
   border-top: 3px solid var(--green);
 }
+
+.task-label {
+  margin-top: 8px;
+}
+
+.label-input {
+  width: 100%;
+  padding: 4px 8px;
+  border: 1px solid var(--light-gray);
+  border-radius: 3px;
+  font-size: 12px;
+  color: var(--neutral-gray);
+}
+
+.label-input:focus {
+  outline: 2px solid var(--secondary-blue);
+  border-color: transparent;
+}
