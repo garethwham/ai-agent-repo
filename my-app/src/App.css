@@ -19,13 +19,56 @@
   background-color: var(--primary-blue);
   padding: 18px;
   color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.task-list {
+.view-toggle-btn {
+  background-color: var(--white);
+  color: var(--primary-blue);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.view-toggle-btn:hover {
+  background-color: var(--light-gray);
+}
+
+.task-container {
+  padding: 20px;
+}
+
+.task-container.kanban .task-list {
   display: flex;
   justify-content: space-around;
-  padding: 20px;
   gap: 20px;
+}
+
+.task-container.list .task-list-view {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.task-list-view .task-card {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.task-list-view .task-status {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 500;
+  background-color: var(--light-gray);
+  color: var(--neutral-gray);
 }
 
 .task-column {
