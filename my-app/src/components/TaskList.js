@@ -24,7 +24,7 @@ const initialTasks = [
   }
 ];
 
-function TaskList() {
+function TaskList({ viewMode }) {
   const [tasks, setTasks] = useState(initialTasks);
 
   const getTasksByStatus = (status) => {
@@ -72,11 +72,38 @@ function TaskList() {
     </div>
   );
 
+  const ListView = () => (
+    <div className="task-list-view">
+      {tasks.map(task => (
+        <div key={task.id} className={`task-card status-${task.status.toLowerCase().replace(' ', '-')}`}>
+          <div className="task-status">{task.status}</div>
+          <h3>{task.title}</h3>
+          <p>{task.description}</p>
+          <div className="task-label">
+            <input
+              type="text"
+              placeholder="Add label"
+              value={task.label}
+              onChange={(e) => handleLabelChange(task.id, e.target.value)}
+              className="label-input"
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+
   return (
-    <div className="task-list">
-      <TaskColumn status="To Do" />
-      <TaskColumn status="In Progress" />
-      <TaskColumn status="Done" />
+    <div className={`task-container ${viewMode}`}>
+      {viewMode === 'kanban' ? (
+        <div className="task-list">
+          <TaskColumn status="To Do" />
+          <TaskColumn status="In Progress" />
+          <TaskColumn status="Done" />
+        </div>
+      ) : (
+        <ListView />
+      )}
     </div>
   );
 }
