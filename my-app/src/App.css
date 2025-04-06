@@ -116,6 +116,52 @@
   border-top: 3px solid var(--green);
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 16px;
+}
+
+.pagination button {
+  background-color: var(--primary-blue);
+  color: var(--white);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.pagination button:disabled {
+  background-color: var(--light-gray);
+  cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: var(--secondary-blue);
+}
+
+.loading {
+  text-align: center;
+  padding: 32px;
+  color: var(--neutral-gray);
+  font-size: 18px;
+}
+
+.error {
+  text-align: center;
+  padding: 32px;
+  color: #DE350B;
+  font-size: 18px;
+  background-color: #FFEBE6;
+  margin: 16px;
+  border-radius: 4px;
+}
+
 .task-label {
   margin-top: 8px;
 }
