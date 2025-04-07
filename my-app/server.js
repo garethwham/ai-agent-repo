@@ -1,10 +1,31 @@
 require('dotenv').config();
 const express = require('express');
+const Sentry = require('@sentry/node');
 const cors = require('cors');
 const { Pool } = require('pg');
 
 const app = express();
 const port = process.env.PORT || 3001;
+
+// Initialize Sentry
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  integrations: [
+    // enable HTTP calls tracing
+    new Sentry.Integrations.Http({ tracing: true }),
+    // enable Express.js middleware tracing
+    new Sentry.Integrations.Express({ app }),
+  ],
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  tracesSampleRate: 1.0,
+});
+
+// The request handler must be the first middleware on the app
+app.use(Sentry.Handlers.requestHandler());
+
+// TracingHandler creates a trace for every incoming request
+app.use(Sentry.Handlers.tracingHandler());
 
 // Database configuration
 const pool = new Pool(); // Uses environment variables by default
@@ -15,6 +36,7 @@ app.use(express.json());
 // Error handler middleware
 const errorHandler = (err, req, res, next) => {
   console.error(err.stack);
+  Sentry.captureException(err);
   res.status(500).json({ error: 'Internal server error' });
 };
 
@@ -142,6 +164,10 @@ app.put('/api/preferences/:userId', async (req, res, next) => {
   }
 });
 
+// The error handler must be before any other error middleware and after all controllers
+app.use(Sentry.Handlers.errorHandler());
+
+// Regular error handlers
 app.use(errorHandler);
 
 // Initialize database connection and start server

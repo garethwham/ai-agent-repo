@@ -14,7 +14,8 @@
     "cors": "^2.8.5",
     "axios": "^1.4.0",
     "pg": "^8.11.0",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "@sentry/node": "^7.52.1"
   },
   "scripts": {
     "start": "react-scripts start",
