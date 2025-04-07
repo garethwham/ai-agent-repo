@@ -38,20 +38,76 @@ function TaskList({ viewMode }) {
     return tasks.filter(task => task.status === status);
   };
 
-  const handleLabelChange = (taskId, newLabel) => {
-    // Check if label already exists in any task
-    const labelExists = tasks.some(task => 
-      task.id !== taskId && task.label.toLowerCase() === newLabel.toLowerCase()
-    );
+  const handleLabelChange = async (taskId, newLabel) => {
+    try {
+      // Check if label already exists in any task
+      const labelExists = tasks.some(task => 
+        task.id !== taskId && task.label.toLowerCase() === newLabel.toLowerCase()
+      );
 
-    if (labelExists) {
-      alert('This label already exists. Please use a unique label.');
-      return;
+      if (labelExists) {
+        alert('This label already exists. Please use a unique label.');
+        return;
+      }
+
+      const task = tasks.find(t => t.id === taskId);
+      if (!task) return;
+
+      const response = await axios.put(`http://localhost:3001/api/tasks/${taskId}`, {
+        ...task,
+        label: newLabel
+      });
+
+      setTasks(tasks.map(t =>
+        t.id === taskId ? response.data : t
+      ));
+      setError(null);
+    } catch (err) {
+      setError('Failed to update task label. Please try again later.');
+      console.error('Error updating task label:', err);
     }
+  };
 
-    setTasks(tasks.map(task =>
-      task.id === taskId ? { ...task, label: newLabel } : task
-    ));
+  const createTask = async (taskData) => {
+    try {
+      const response = await axios.post('http://localhost:3001/api/tasks', taskData);
+      setTasks([...tasks, response.data]);
+      setError(null);
+    } catch (err) {
+      setError('Failed to create task. Please try again later.');
+      console.error('Error creating task:', err);
+    }
+  };
+
+  const updateTaskStatus = async (taskId, newStatus) => {
+    try {
+      const task = tasks.find(t => t.id === taskId);
+      if (!task) return;
+
+      const response = await axios.put(`http://localhost:3001/api/tasks/${taskId}`, {
+        ...task,
+        status: newStatus
+      });
+
+      setTasks(tasks.map(t =>
+        t.id === taskId ? response.data : t
+      ));
+      setError(null);
+    } catch (err) {
+      setError('Failed to update task status. Please try again later.');
+      console.error('Error updating task status:', err);
+    }
+  };
+
+  const deleteTask = async (taskId) => {
+    try {
+      await axios.delete(`http://localhost:3001/api/tasks/${taskId}`);
+      setTasks(tasks.filter(t => t.id !== taskId));
+      setError(null);
+    } catch (err) {
+      setError('Failed to delete task. Please try again later.');
+      console.error('Error deleting task:', err);
+    }
   };
 
   const TaskCard = ({ task }) => (

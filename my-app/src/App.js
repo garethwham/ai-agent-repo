@@ -1,20 +1,44 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './App.css';
 import TaskList from './components/TaskList';
 
 function App() {
-  const [viewMode, setViewMode] = useState(() => {
-    // Get saved view mode from localStorage or default to 'kanban'
-    return localStorage.getItem('viewMode') || 'kanban';
-  });
+  const [viewMode, setViewMode] = useState('kanban');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const userId = 'default-user'; // In a real app, this would come from authentication
 
   useEffect(() => {
-    // Save view mode to localStorage whenever it changes
-    localStorage.setItem('viewMode', viewMode);
-  }, [viewMode]);
+    const fetchUserPreferences = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`http://localhost:3001/api/preferences/${userId}`);
+        setViewMode(response.data.view_mode);
+        setError(null);
+      } catch (err) {
+        setError('Failed to load user preferences');
+        console.error('Error loading user preferences:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const toggleView = () => {
-    setViewMode(prevMode => prevMode === 'kanban' ? 'list' : 'kanban');
+    fetchUserPreferences();
+  }, [userId]);
+
+  const toggleView = async () => {
+    const newViewMode = viewMode === 'kanban' ? 'list' : 'kanban';
+    try {
+      await axios.put(`http://localhost:3001/api/preferences/${userId}`, {
+        viewMode: newViewMode
+      });
+      setViewMode(newViewMode);
+      setError(null);
+    } catch (err) {
+      setError('Failed to update view mode');
+      console.error('Error updating view mode:', err);
+    }
   };
 
   return (
