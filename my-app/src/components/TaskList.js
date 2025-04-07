@@ -1,31 +1,38 @@
-import React, { useState } from 'react';
-
-const initialTasks = [
-  {
-    id: 1,
-    title: 'Design UI mockups',
-    description: 'Create initial wireframes for the application',
-    status: 'To Do',
-    label: ''
-  },
-  {
-    id: 2,
-    title: 'Implement React components',
-    description: 'Build the core components for the task tracking system',
-    status: 'In Progress',
-    label: ''
-  },
-  {
-    id: 3,
-    title: 'Write documentation',
-    description: 'Document the component structure and usage',
-    status: 'Done',
-    label: ''
-  }
-];
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function TaskList({ viewMode }) {
-  const [tasks, setTasks] = useState(initialTasks);
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 10,
+    total: 0,
+    totalPages: 0
+  });
+
+  const fetchTasks = async (page = 1, status = null) => {
+    try {
+      setLoading(true);
+      const params = { page, limit: pagination.limit };
+      if (status) params.status = status;
+      
+      const response = await axios.get('http://localhost:3001/api/tasks', { params });
+      setTasks(response.data.tasks);
+      setPagination(response.data.pagination);
+      setError(null);
+    } catch (err) {
+      setError('Failed to fetch tasks. Please try again later.');
+      console.error('Error fetching tasks:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
   const getTasksByStatus = (status) => {
     return tasks.filter(task => task.status === status);
@@ -93,6 +100,32 @@ function TaskList({ viewMode }) {
     </div>
   );
 
+  const Pagination = () => (
+    <div className="pagination">
+      <button
+        onClick={() => fetchTasks(pagination.page - 1)}
+        disabled={pagination.page === 1 || loading}
+      >
+        Previous
+      </button>
+      <span>Page {pagination.page} of {pagination.totalPages}</span>
+      <button
+        onClick={() => fetchTasks(pagination.page + 1)}
+        disabled={pagination.page === pagination.totalPages || loading}
+      >
+        Next
+      </button>
+    </div>
+  );
+
+  if (loading && tasks.length === 0) {
+    return <div className="loading">Loading tasks...</div>;
+  }
+
+  if (error) {
+    return <div className="error">{error}</div>;
+  }
+
   return (
     <div className={`task-container ${viewMode}`}>
       {viewMode === 'kanban' ? (
@@ -102,7 +135,10 @@ function TaskList({ viewMode }) {
           <TaskColumn status="Done" />
         </div>
       ) : (
-        <ListView />
+        <>
+          <ListView />
+          <Pagination />
+        </>
       )}
     </div>
   );
