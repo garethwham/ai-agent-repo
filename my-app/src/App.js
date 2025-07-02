@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 import TaskList from './components/TaskList';
+import TimelineView from './components/TimelineView';
 
 function App() {
   const [viewMode, setViewMode] = useState('kanban');
@@ -28,7 +29,7 @@ function App() {
   }, [userId]);
 
   const toggleView = async () => {
-    const newViewMode = viewMode === 'kanban' ? 'list' : 'kanban';
+    const newViewMode = viewMode === 'kanban' ? 'list' : (viewMode === 'list' ? 'timeline' : 'kanban');
     try {
       await axios.put(`http://localhost:3001/api/preferences/${userId}`, {
         viewMode: newViewMode
@@ -49,7 +50,7 @@ function App() {
           className="view-toggle-btn"
           onClick={toggleView}
         >
-          {viewMode === 'kanban' ? 'Switch to List View' : 'Switch to Kanban View'}
+          {viewMode === 'kanban' ? 'Switch to List View' : (viewMode === 'list' ? 'Switch to Timeline View' : 'Switch to Kanban View')}
         </button>
       </header>
       <main>

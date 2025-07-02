@@ -190,11 +190,13 @@ function TaskList({ viewMode }) {
           <TaskColumn status="In Progress" />
           <TaskColumn status="Done" />
         </div>
-      ) : (
+      ) : viewMode === 'list' ? (
         <>
           <ListView />
           <Pagination />
         </>
+      ) : (
+        <TimelineView tasks={tasks} />
       )}
     </div>
   );
