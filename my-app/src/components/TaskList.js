@@ -13,13 +13,19 @@ function TaskList({ viewMode }) {
   });
 
   const fetchTasks = async (page = 1, status = null) => {
+    // Ensure tasks have createdDate and shipDate
+    const addMissingDates = (task) => {
+      if (!task.createdDate) task.createdDate = new Date().toISOString().split('T')[0];
+      if (!task.shipDate) task.shipDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+      return task;
+    };
     try {
       setLoading(true);
       const params = { page, limit: pagination.limit };
       if (status) params.status = status;
       
       const response = await axios.get('http://localhost:3001/api/tasks', { params });
-      setTasks(response.data.tasks);
+      setTasks(response.data.tasks.map(addMissingDates));
       setPagination(response.data.pagination);
       setError(null);
     } catch (err) {
