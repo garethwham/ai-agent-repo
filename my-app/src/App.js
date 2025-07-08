@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 import TaskList from './components/TaskList';
+import DateMarker from './components/DateMarker';
 
 function App() {
   const [viewMode, setViewMode] = useState('kanban');
@@ -53,6 +54,7 @@ function App() {
         </button>
       </header>
       <main>
+        <DateMarker />
         <TaskList viewMode={viewMode} />
       </main>
     </div>

@@ -1,0 +1,118 @@
+.date-marker-container {
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+
+.date-marker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.add-marker-btn {
+  padding: 0.5rem 1rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-marker-btn:hover {
+  background-color: #45a049;
+}
+
+.date-marker-form {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.form-actions button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-actions button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.form-actions button[type="button"] {
+  background-color: #f44336;
+  color: white;
+}
+
+.markers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.marker-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 0.75rem;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.marker-info {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.marker-name {
+  font-weight: bold;
+}
+
+.marker-date {
+  color: #666;
+}
+
+.delete-marker-btn {
+  background: none;
+  border: none;
+  color: #f44336;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+}
+
+.delete-marker-btn:hover {
+  background-color: #ffebee;
+  border-radius: 50%;
+}

@@ -148,6 +148,48 @@ app.get('/api/preferences/:userId', async (req, res, next) => {
   }
 });
 
+// GET /api/date-markers/:userId - Get user's date markers
+app.get('/api/date-markers/:userId', async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const result = await pool.query(
+      'SELECT * FROM date_markers WHERE user_id = $1 ORDER BY marker_date',
+      [userId]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// POST /api/date-markers - Create new date marker
+app.post('/api/date-markers', async (req, res, next) => {
+  try {
+    const { name, markerDate, userId } = req.body;
+    const result = await pool.query(
+      'INSERT INTO date_markers (name, marker_date, user_id) VALUES ($1, $2, $3) RETURNING *',
+      [name, markerDate, userId]
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// DELETE /api/date-markers/:id - Delete date marker
+app.delete('/api/date-markers/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query('DELETE FROM date_markers WHERE id = $1 RETURNING *', [id]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Date marker not found' });
+    }
+    res.json({ message: 'Date marker deleted successfully' });
+  } catch (err) {
+    next(err);
+  }
+});
+
 // PUT /api/preferences/:userId - Update user preferences
 app.put('/api/preferences/:userId', async (req, res, next) => {
   try {

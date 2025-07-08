@@ -9,6 +9,22 @@ CREATE TABLE IF NOT EXISTS tasks (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Create date_markers table
+CREATE TABLE IF NOT EXISTS date_markers (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    marker_date DATE NOT NULL,
+    user_id VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create trigger for date_markers timestamp
+CREATE TRIGGER update_date_markers_updated_at
+    BEFORE UPDATE ON date_markers
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
 -- Create user_preferences table
 CREATE TABLE IF NOT EXISTS user_preferences (
     id SERIAL PRIMARY KEY,
