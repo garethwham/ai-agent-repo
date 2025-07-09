@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 import TaskList from './components/TaskList';
+import ViewToggle from './components/ViewToggle';
 
 function App() {
   const [viewMode, setViewMode] = useState('kanban');
@@ -45,18 +46,12 @@ function App() {
     <div className="app">
       <header className="app-header">
         <h1>Team '25 todo list</h1>
-        <button 
-          className="view-toggle-btn"
-          onClick={toggleView}
-        >
-          {viewMode === 'kanban' ? 'Switch to List View' : 'Switch to Kanban View'}
-        </button>
+        <ViewToggle viewMode={viewMode} toggleView={toggleView} />
       </header>
       <main>
-        <TaskList viewMode={viewMode} />
+        <TaskList viewMode={viewMode} onToggleView={toggleView} />
       </main>
     </div>
   );
 }
-
 export default App;

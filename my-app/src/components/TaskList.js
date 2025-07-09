@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ViewToggle from './ViewToggle';
 
-function TaskList({ viewMode }) {
+function TaskList({ viewMode, onToggleView }) {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -184,6 +185,9 @@ function TaskList({ viewMode }) {
 
   return (
     <div className={`task-container ${viewMode}`}>
+      <div className="toggle-wrapper">
+        <ViewToggle viewMode={viewMode} toggleView={onToggleView} />
+      </div>
       {viewMode === 'kanban' ? (
         <div className="task-list">
           <TaskColumn status="To Do" />
@@ -199,5 +203,4 @@ function TaskList({ viewMode }) {
     </div>
   );
 }
-
 export default TaskList;
