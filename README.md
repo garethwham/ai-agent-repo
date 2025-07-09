@@ -8,6 +8,7 @@ A modern, React-based todo list application with Atlassian-inspired design. This
   - To Do
   - In Progress
   - Done
+- **Toggleable Views**: Switch between Kanban board and a paginated list view
 - **Task Cards**: Each task includes:
   - Title
   - Description
@@ -57,6 +58,7 @@ The application provides a simple and intuitive interface for managing tasks:
 3. Visual indicators (colored borders) help quickly identify task status
 4. Add unique labels to tasks for better organization and categorization
 5. The responsive layout ensures a great experience on both desktop and mobile devices
+6. Use the view toggle button in the header to switch between board and list layouts
 
 ### Task Labels
 - Each task can have a unique label for better organization

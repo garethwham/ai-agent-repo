@@ -39,6 +39,11 @@
   background-color: var(--light-gray);
 }
 
+.toggle-wrapper {
+  text-align: right;
+  margin-bottom: 16px;
+}
+
 .task-container {
   padding: 20px;
 }
