@@ -71,7 +71,8 @@ function TaskList({ viewMode }) {
   const createTask = async (taskData) => {
     try {
       const response = await axios.post('http://localhost:3001/api/tasks', taskData);
-      setTasks([...tasks, response.data]);
+      // Refetch the current page to keep pagination in sync
+      await fetchTasks(pagination.page);
       setError(null);
     } catch (err) {
       setError('Failed to create task. Please try again later.');

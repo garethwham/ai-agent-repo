@@ -58,14 +58,16 @@ app.get('/api/tasks', async (req, res, next) => {
       values.push(status);
     }
 
+    // Always add LIMIT and OFFSET as the last parameters
     query += ' ORDER BY id LIMIT $' + (values.length + 1) + ' OFFSET $' + (values.length + 2);
-    
+    values.push(limit, offset);
+
     // Get total count
     const countResult = await pool.query(countQuery, status ? [status] : []);
     const total = parseInt(countResult.rows[0].count);
 
     // Get paginated tasks
-    const result = await pool.query(query, [...values, limit, offset]);
+    const result = await pool.query(query, values);
 
     const pagination = {
       total,
@@ -83,10 +85,22 @@ app.get('/api/tasks', async (req, res, next) => {
   }
 });
 
+// Helper function for input validation
+function validateTaskInput({ title, description, status, label }) {
+  if (typeof title !== 'string' || title.length < 1 || title.length > 255) return false;
+  if (typeof description !== 'string' || description.length > 1000) return false;
+  if (typeof status !== 'string' || !['To Do', 'In Progress', 'Done'].includes(status)) return false;
+  if (typeof label !== 'string' || label.length > 100) return false;
+  return true;
+}
+
 // POST /api/tasks - Create new task
 app.post('/api/tasks', async (req, res, next) => {
   try {
     const { title, description, status, label = '' } = req.body;
+    if (!validateTaskInput({ title, description, status, label })) {
+      return res.status(400).json({ error: 'Invalid input' });
+    }
     const result = await pool.query(
       'INSERT INTO tasks (title, description, status, label) VALUES ($1, $2, $3, $4) RETURNING *',
       [title, description, status, label]
@@ -102,6 +116,9 @@ app.put('/api/tasks/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const { title, description, status, label } = req.body;
+    if (!validateTaskInput({ title, description, status, label })) {
+      return res.status(400).json({ error: 'Invalid input' });
+    }
     const result = await pool.query(
       'UPDATE tasks SET title = $1, description = $2, status = $3, label = $4 WHERE id = $5 RETURNING *',
       [title, description, status, label, id]
