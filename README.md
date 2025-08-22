@@ -1,5 +1,14 @@
 # Team '25 Todo List
 
+```
+                    __
+                ___( o)>
+                \ <_. )
+                 `---'
+```
+
+🦆 **Quack! Welcome to our duck-tastic todo app!** 🦆
+
 A modern, React-based todo list application with Atlassian-inspired design. This application helps teams manage their tasks efficiently with a clean and intuitive interface.
 
 ## Features
