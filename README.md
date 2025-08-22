@@ -1,3 +1,18 @@
+```
+                    |>
+                   /|
+                  / |__
+                 /    /
+                /___ /
+               /    /
+              /____/
+             /      \
+            /        \
+           /          \
+          /______________\
+         ~~~~~~~~~~~~~~~~~~~
+```
+
 # Team '25 Todo List
 
 A modern, React-based todo list application with Atlassian-inspired design. This application helps teams manage their tasks efficiently with a clean and intuitive interface.
