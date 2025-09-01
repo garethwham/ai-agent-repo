@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS user_preferences (
     id SERIAL PRIMARY KEY,
     user_id VARCHAR(50) NOT NULL UNIQUE,
     view_mode VARCHAR(20) DEFAULT 'kanban',
+    theme VARCHAR(20) DEFAULT 'light',
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

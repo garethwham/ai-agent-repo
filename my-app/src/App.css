@@ -9,6 +9,15 @@
   --yellow: #FFAB00;
 }
 
+body.dark-mode {
+  --primary-blue: #4C9AFF;
+  --secondary-blue: #2684FF;
+  --neutral-gray: #DFE1E6;
+  --light-gray: #1B2638;
+  --green: #57D9A3;
+  --yellow: #FFE380;
+}
+
 .app {
   text-align: center;
   background-color: var(--light-gray);
@@ -24,6 +33,11 @@
   align-items: center;
 }
 
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
 .view-toggle-btn {
   background-color: var(--white);
   color: var(--primary-blue);
@@ -37,6 +51,15 @@
 
 .view-toggle-btn:hover {
   background-color: var(--light-gray);
+}
+
+.dark-mode .view-toggle-btn {
+  background-color: var(--primary-blue);
+  color: var(--white);
+}
+
+.dark-mode .view-toggle-btn:hover {
+  background-color: var(--secondary-blue);
 }
 
 .task-container {
@@ -71,12 +94,22 @@
   color: var(--neutral-gray);
 }
 
+.dark-mode .task-list-view .task-status {
+  background-color: #2C3E50;
+  color: var(--neutral-gray);
+}
+
 .task-column {
   background-color: var(--white);
   border-radius: 8px;
   padding: 16px;
   min-width: 300px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+
+.dark-mode .task-column {
+  background-color: #2C3E50;
+  border: 1px solid #1B2638;
 }
 
 .task-column h2 {
@@ -91,6 +124,11 @@
   padding: 12px;
   margin-bottom: 8px;
   text-align: left;
+}
+
+.dark-mode .task-card {
+  background-color: #2C3E50;
+  border: 1px solid #1B2638;
 }
 
 .task-card h3 {
@@ -178,4 +216,43 @@
 .label-input:focus {
   outline: 2px solid var(--secondary-blue);
   border-color: transparent;
+}
+
+.dark-mode .label-input {
+  background-color: #2C3E50;
+  border: 1px solid #1B2638;
+  color: var(--neutral-gray);
+}
+
+.settings-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-modal {
+  background-color: var(--white);
+  padding: 20px;
+  border-radius: 8px;
+  color: var(--neutral-gray);
+  min-width: 200px;
+  text-align: left;
+}
+
+.dark-mode .settings-modal {
+  background-color: #2C3E50;
+  color: var(--neutral-gray);
+}
+
+.settings-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
 }
