@@ -137,8 +137,8 @@ app.get('/api/preferences/:userId', async (req, res, next) => {
     if (result.rows.length === 0) {
       // Create default preferences if none exist
       const defaultResult = await pool.query(
-        'INSERT INTO user_preferences (user_id, view_mode) VALUES ($1, $2) RETURNING *',
-        [userId, 'kanban']
+        'INSERT INTO user_preferences (user_id, view_mode, theme) VALUES ($1, $2, $3) RETURNING *',
+        [userId, 'kanban', 'light']
       );
       return res.json(defaultResult.rows[0]);
     }
@@ -152,11 +152,11 @@ app.get('/api/preferences/:userId', async (req, res, next) => {
 app.put('/api/preferences/:userId', async (req, res, next) => {
   try {
     const { userId } = req.params;
-    const { viewMode } = req.body;
+    const { viewMode, theme } = req.body;
     const result = await pool.query(
-      'INSERT INTO user_preferences (user_id, view_mode) VALUES ($1, $2) ' +
-      'ON CONFLICT (user_id) DO UPDATE SET view_mode = $2 RETURNING *',
-      [userId, viewMode]
+      'INSERT INTO user_preferences (user_id, view_mode, theme) VALUES ($1, $2, $3) ' +
+      'ON CONFLICT (user_id) DO UPDATE SET view_mode = $2, theme = $3 RETURNING *',
+      [userId, viewMode, theme]
     );
     res.json(result.rows[0]);
   } catch (err) {
