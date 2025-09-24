@@ -89,3 +89,21 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Built with [Create React App](https://create-react-app.dev/)
 - Styled using Atlassian design principles
 - React 18 for modern web development
+
+## ASCII Art - Lion
+
+```text
+          .-""-.
+        .'_/_\_ '.
+       / <<   >> \
+      |  (o) (o)  |
+      |     ^     |
+      |  \_____\/ |
+       \  \___/  /
+     ___'-.___.-'___
+   .'___  / | \  ___'.
+        '-\_|_/-'
+          /___\
+          \___/
+           LION
+```
