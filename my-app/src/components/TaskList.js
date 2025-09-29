@@ -68,6 +68,26 @@ function TaskList({ viewMode }) {
     }
   };
 
+  const handleDateChange = async (taskId, dateField, newDate) => {
+    try {
+      const task = tasks.find(t => t.id === taskId);
+      if (!task) return;
+
+      const response = await axios.put(`http://localhost:3001/api/tasks/${taskId}`, {
+        ...task,
+        [dateField]: newDate
+      });
+
+      setTasks(tasks.map(t =>
+        t.id === taskId ? response.data : t
+      ));
+      setError(null);
+    } catch (err) {
+      setError('Failed to update task date. Please try again later.');
+      console.error('Error updating task date:', err);
+    }
+  };
+
   const createTask = async (taskData) => {
     try {
       const response = await axios.post('http://localhost:3001/api/tasks', taskData);
@@ -123,6 +143,26 @@ function TaskList({ viewMode }) {
           className="label-input"
         />
       </div>
+      <div className="task-dates">
+        <div className="date-field">
+          <label>Start Date:</label>
+          <input
+            type="date"
+            value={task.start_date ? task.start_date.split('T')[0] : ''}
+            onChange={(e) => handleDateChange(task.id, 'start_date', e.target.value)}
+            className="date-input"
+          />
+        </div>
+        <div className="date-field">
+          <label>End Date:</label>
+          <input
+            type="date"
+            value={task.end_date ? task.end_date.split('T')[0] : ''}
+            onChange={(e) => handleDateChange(task.id, 'end_date', e.target.value)}
+            className="date-input"
+          />
+        </div>
+      </div>
     </div>
   );
 
@@ -150,6 +190,26 @@ function TaskList({ viewMode }) {
               onChange={(e) => handleLabelChange(task.id, e.target.value)}
               className="label-input"
             />
+          </div>
+          <div className="task-dates">
+            <div className="date-field">
+              <label>Start Date:</label>
+              <input
+                type="date"
+                value={task.start_date ? task.start_date.split('T')[0] : ''}
+                onChange={(e) => handleDateChange(task.id, 'start_date', e.target.value)}
+                className="date-input"
+              />
+            </div>
+            <div className="date-field">
+              <label>End Date:</label>
+              <input
+                type="date"
+                value={task.end_date ? task.end_date.split('T')[0] : ''}
+                onChange={(e) => handleDateChange(task.id, 'end_date', e.target.value)}
+                className="date-input"
+              />
+            </div>
           </div>
         </div>
       ))}

@@ -179,3 +179,49 @@
   outline: 2px solid var(--secondary-blue);
   border-color: transparent;
 }
+
+.task-dates {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.date-field {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 120px;
+}
+
+.date-field label {
+  font-size: 11px;
+  color: var(--neutral-gray);
+  margin-bottom: 4px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.date-input {
+  padding: 6px 8px;
+  border: 1px solid var(--light-gray);
+  border-radius: 3px;
+  font-size: 12px;
+  color: var(--neutral-gray);
+  background-color: var(--white);
+}
+
+.date-input:focus {
+  outline: 2px solid var(--secondary-blue);
+  border-color: transparent;
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: opacity(0.6);
+}
+
+.date-input::-webkit-calendar-picker-indicator:hover {
+  filter: opacity(1);
+}

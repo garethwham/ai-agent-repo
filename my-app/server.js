@@ -86,10 +86,10 @@ app.get('/api/tasks', async (req, res, next) => {
 // POST /api/tasks - Create new task
 app.post('/api/tasks', async (req, res, next) => {
   try {
-    const { title, description, status, label = '' } = req.body;
+    const { title, description, status, label = '', start_date, end_date } = req.body;
     const result = await pool.query(
-      'INSERT INTO tasks (title, description, status, label) VALUES ($1, $2, $3, $4) RETURNING *',
-      [title, description, status, label]
+      'INSERT INTO tasks (title, description, status, label, start_date, end_date) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [title, description, status, label, start_date || null, end_date || null]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -101,10 +101,10 @@ app.post('/api/tasks', async (req, res, next) => {
 app.put('/api/tasks/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { title, description, status, label } = req.body;
+    const { title, description, status, label, start_date, end_date } = req.body;
     const result = await pool.query(
-      'UPDATE tasks SET title = $1, description = $2, status = $3, label = $4 WHERE id = $5 RETURNING *',
-      [title, description, status, label, id]
+      'UPDATE tasks SET title = $1, description = $2, status = $3, label = $4, start_date = $5, end_date = $6 WHERE id = $7 RETURNING *',
+      [title, description, status, label, start_date || null, end_date || null, id]
     );
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Task not found' });
